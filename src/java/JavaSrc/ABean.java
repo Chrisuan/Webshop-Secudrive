@@ -105,7 +105,7 @@ public class ABean {
     public void updateArticleDetails()
     {
         currentArticle.updateArticle();
-    }
+    }//Ende updateArticleDetails
     
     
 }//Ende ABean
