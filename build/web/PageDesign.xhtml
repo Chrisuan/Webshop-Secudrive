@@ -1,0 +1,69 @@
+<?xml version='1.0' encoding='UTF-8' ?> 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+   
+    <h:head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <h:outputStylesheet name="./css/default.css"/>
+        <h:outputStylesheet name="./css/cssLayout.css"/>
+       <title><ui:insert name="title">Login</ui:insert></title>
+    </h:head>
+    <h:body>
+        
+       
+        
+        <div id="headline">
+            Webshop SECUDRIVE
+            <p id ="subtitle">Alles rund um die Sicherheit Ihres Fahrzeugs</p>
+        </div>
+        <div id="top" class="top">
+            <ui:insert name="top">
+                <h:form id="search" >
+                    <h:panelGrid columns="7" border="1" cellpadding="2" 
+                                 cellspacing="2">
+                    <h:outputLabel for="search" value="Suche: "/>
+                    <h:inputText  class="userInputField" value="#{articleUtils.searchParam}">
+                         
+                    </h:inputText>
+                        
+                    <h:commandButton value="Suchen" action="suchergebnisse.xhtml">
+                        <f:actionListener binding="#{articleUtils.searchArt()}"/>
+                    </h:commandButton>
+               
+                    <h:commandLink value="Home" action="./index.xhtml"/>
+                    <h:commandLink rendered="#{!cBean.currentCustomer.loggedIn}" 
+                                   value="Login" action="./login.xhtml"/>
+                    <h:commandLink rendered="#{cBean.currentCustomer.loggedIn}" 
+                                   value="Logout" action="#{cBean.logout()}"/>
+                    <h:commandLink rendered="#{cBean.currentCustomer.loggedIn}"
+                                   value="Mein Account" action="myAccount.xhtml"/>
+                    <h:commandLink value="Artikelverwaltung" 
+                                   action="artikelverwaltung.xhtml"
+                                   rendered="#{cBean.currentCustomer.CAccessLevel>=2}"/>
+                    </h:panelGrid>
+                </h:form>
+            </ui:insert>
+        </div>
+        
+            <div id="left">
+                <ui:insert name="left">
+                    <h:outputText value="Kategorien"/>
+                <h:form>
+                    <h:panelGrid columns="1" cellpadding="5"
+                                 cellspacing="5">
+                        
+                        <h:commandLink value="PKW" action="./autosicherheit.xhtml"/>
+                        <h:commandLink value="LKW" action="./lkwsicherheit.xhtml"/>
+                    </h:panelGrid>
+                </h:form>
+                </ui:insert>
+            </div>
+            <div id="content" class="left_content">
+                <ui:insert name="content">Content</ui:insert>
+            </div>
+    </h:body>
+
+</html>

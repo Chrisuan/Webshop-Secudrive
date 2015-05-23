@@ -1,0 +1,83 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+       
+    </h:head>
+    <h:body>
+        <ui:composition template="PageDesign.xhtml">
+            <ui:define name="title">Neuer Artikel</ui:define>
+            
+            <ui:define name="content">
+                 <h:outputText value="Sie sind nicht berechtigt, diese Seite zu
+                          bearbeiten. Bitte kehren Sie zur Startseite zurück!"
+                          rendered="#{!(cBean.currentCustomer.CAccessLevel>=2)}"/>
+                
+                <h:form rendered="#{cBean.currentCustomer.CAccessLevel>=2}"
+                        enctype="multipart/form-data"
+                        class="mainForm">
+                    <h:panelGrid columns="3" columnClasses="label, input, img"
+                                 cellpadding="10" cellspacing="3" border="1">
+                        
+                        
+                        
+                        <h:outputLabel for="bild" value="URL-Artikelbild: "/>
+                            <h:inputFile id="bild" value="#{aBean.currentArticle.uploadedFile}">
+                                <f:ajax listener="#{aBean.uploadPic()}" 
+                                        render="@all" event="valueChange"  execute="articleImg"/>
+                            </h:inputFile>
+                        
+                        <h:panelGroup id="articleImg"> 
+                            <h:graphicImage 
+                                value="../resources/#{aBean.currentArticle.AImgOnServer.name}"
+                                rendered="#{aBean.currentArticle.AImgOnServer!=null}"
+                                width="100" height="100"/>
+                        </h:panelGroup>
+                        
+                        <h:outputLabel for="abez" value="Artikelname: "/>
+                        <h:inputText id="abez" 
+                                     value="#{aBean.currentArticle.AName}"
+                                     maxlength="50" required="true"
+                                     requiredMessage="Artikelname ist Pflichtfeld">
+                            <f:validateLength maximum="50"/>
+                        </h:inputText>
+                        <h:panelGroup/>
+                      
+                        <h:outputLabel for="preis" value="Artikelpreis: "/>
+                        <h:inputText id="preis" 
+                                     value="#{aBean.currentArticle.APrice}"
+                                     required="true"
+                                     requiredMessage="Artikelpreis ist Pflichtfeld"/>
+                        
+                        
+                        
+                        <h:commandButton value="Artikel speichern" 
+                                         action ="#{aBean.saveArticle()}"
+                                         rendered="#{!(aBean.currentArticle.ainDB)}">
+                                    
+                        </h:commandButton>
+                        <h:commandButton value="Weitere Artikel hinzufügen"
+                                         rendered="#{aBean.currentArticle.ainDB}"
+                                         action="neuerArtikel.xhtml"/>
+                        
+                    </h:panelGrid>
+                </h:form>
+                 
+                 <p class="message"><h:message for="abez"/></p>
+                 <p class="message"><h:message for="preis"/></p>
+                 <p>
+                     <h:outputText  class="success" value="Artikel erfolgreich gespeichert!" 
+                                    rendered="#{aBean.currentArticle.ainDB}"/>
+                    </p>
+                 
+                
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>
+
+
+

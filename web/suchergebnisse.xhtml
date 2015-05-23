@@ -1,0 +1,57 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+   
+    <h:head>
+    </h:head>
+    <h:body>
+        
+       
+        <ui:composition template="PageDesign.xhtml">
+            
+            <ui:define name="title">Suchergebnisse</ui:define>
+            
+            <ui:define name="content" >
+                <h:form>
+              
+                <h:dataTable value="#{articleUtils.articleList}" 
+                             styleClass="article-table"
+                             headerClass="article-table-header"
+                             cellpadding="10"
+                             cellspacing="10"
+                             rowClasses="article-table-odd-row,article-table-even-row"
+                             var="article">
+                    
+                    <h:column>
+                        <f:facet name="header">Artikelnummer</f:facet>#{article.AID}
+                    </h:column>
+                    <h:column>
+    				<f:facet name="header">Artikelname</f:facet>#{article.AName}
+    			</h:column>
+ 
+    			<h:column>
+    				<f:facet name="header">Artikelpreis</f:facet>#{article.APrice}€
+    			</h:column>
+ 
+    			<h:column>
+    				<f:facet name="header">Artikelbild</f:facet>
+                                <h:link outcome="articleDetails.xhtml"  >
+                                 <h:graphicImage 
+                                value="../resources/#{article.AUrl}"
+                                width="100" height="100"/>
+                                 <f:param name="aid" value="#{article.AID}"/>
+                                 
+                                </h:link>
+    			</h:column>
+                </h:dataTable>
+            </h:form>
+             
+            </ui:define>
+        </ui:composition>
+        
+       
+    </h:body>
+</html>
